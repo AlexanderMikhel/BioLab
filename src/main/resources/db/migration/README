@@ -1,0 +1,6 @@
+when you will create migration file use this script to get time from DB:
+
+select 'V'||''||(select to_char(current_timestamp, 'YYYYMMDDHH24MISSMS'))||'__'
+
+Migration file must look like this:
+V20171119220006410__name.sql
