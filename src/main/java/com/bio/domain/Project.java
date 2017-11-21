@@ -7,6 +7,7 @@ public class Project {
     private Integer id;
 
     private String name;
+
     private User user;
 
     public String getName() {

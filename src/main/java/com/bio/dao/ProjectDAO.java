@@ -14,13 +14,9 @@ public interface ProjectDAO {
 
     Project getProjectbyId(@Param("id") Integer id);
 
-    @Insert("Insert into projects(name) values(#{name})")
-    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int persist(Project project);
 
-    @Update("UPDATE projects SET name = #{name},user_id = #{userId}, updated_at = now() WHERE id = #{project.id}")
     int update(Project project);
 
-    @Delete("UPDATE projects SET deleted_at = now() WHERE id = #{id}")
     void delete(@Param("id") Integer id);
 }

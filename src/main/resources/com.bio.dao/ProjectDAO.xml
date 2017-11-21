@@ -4,39 +4,62 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bio.dao.ProjectDAO">
 
-    <sql id="BaseParam">
+    <sql id="baseParam">
         id,
         p.name as project_name,
         u.id as user_id,
         u.name as user_name
     </sql>
 
-    <select id="getProjects" resultMap="userMap">
-        SELECT
-        <include refid="BaseParam"/>
+    <sql id="baseJoin">
         from projects p
         JOIN users u ON p.user_id = u.id
+    </sql>
+
+    <select id="getProjects" resultMap="projectMap">
+        SELECT
+        <include refid="baseParam"/>
+        <include refid="baseJoin"/>
         <if test="UserId != null">
             WHERE u.id = #{UserId}
+            AND p.deleted_at is null
         </if>
     </select>
 
-    <select id="getById" resultMap="userMap">
+    <select id="getById" resultMap="projectMap">
         SELECT
-        <include refid="BaseParam"/>
-        from projects p
-        JOIN users u ON p.user_id = u.id
+        <include refid="baseParam"/>
+        <include refid="baseJoin"/>
         WHERE p.id = #{id}
+        AND p.deleted_at is null
     </select>
 
+    <insert id="persist" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO projects(name,user_id) VALUES (#{name},#{userId})
+    </insert>
 
+    <update id="update">
+        UPDATE projects SET
+          name = #{name},
+          updated_at = now()
+        WHERE id = #{id}
+    </update>
 
+    <delete id="delete">
+         UPDATE projects SET
+           deleted_at = now()
+        WHERE id = #{id}
+    </delete>
 
-
-    <resultMap id="userMap" type="User">
+    <resultMap id="projectMap" type="Project">
         <id property="id" column="id"/>
         <result property="name" column="project_name"/>
-        <result property="id" column="user_id"/>
+        <collection property="user" resultMap="userMap"/>
+    </resultMap>
+
+    <resultMap id="userMap" type="User">
+        <id property="id" column="user_id"/>
         <result property="name" column="user_name"/>
     </resultMap>
+
 </mapper>
