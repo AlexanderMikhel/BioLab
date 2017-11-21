@@ -5,7 +5,7 @@
 <mapper namespace="com.bio.dao.UserDAO">
 
     <select id="getUsers" resultMap="userMap">
-        SELECT id,name FROM users
+        SELECT id,name FROM users WHERE deleted_at is null
     </select>
 
 

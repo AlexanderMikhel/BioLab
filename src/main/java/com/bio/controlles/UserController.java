@@ -27,4 +27,20 @@ public class UserController {
     public User getById(@PathVariable("id") Integer id) {
         return userService.getById(id);
     }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public void create(@RequestBody User user){
+        userService.add(user);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public User update(@PathVariable("id") Integer id,
+                       @RequestBody User user){
+        return userService.update(user);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") Integer id){
+        userService.delete(id);
+    }
 }

@@ -23,4 +23,17 @@ public class UserService {
     public User getById(Integer id){
         return userDAO.getUserbyId(id);
     }
+
+    public void add(User user){
+        userDAO.add(user);
+    }
+
+    public User update(User user){
+        userDAO.update(user);
+        return userDAO.getUserbyId(user.getId());
+    }
+
+    public void delete(Integer id){
+        userDAO.delete(id);
+    }
 }

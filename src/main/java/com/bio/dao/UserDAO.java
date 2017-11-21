@@ -15,15 +15,15 @@ public interface UserDAO {
 
     List<User> getUsers();
 
-    @Select("SELECT id,name FROM users WHERE id = #{id}")
+    @Select("SELECT id,name FROM users WHERE id = #{id} and deleted_at is null")
     User getUserbyId(@Param("id") Integer id);
 
     @Insert("Insert into users(name) values(#{name})")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-    int persist(User user);
+    void add(User user);
 
     @Update("UPDATE users SET name = #{name}, updated_at = now() WHERE id = #{id}")
-    int update(User user);
+    void update(User user);
 
     @Delete("UPDATE users SET deleted_at = now() WHERE id = #{id}")
     void delete(@Param("id") Integer id);
