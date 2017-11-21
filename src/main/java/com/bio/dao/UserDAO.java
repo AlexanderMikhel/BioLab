@@ -18,14 +18,14 @@ public interface UserDAO {
     @Select("SELECT id,name FROM users WHERE id = #{id}")
     User getUserbyId(@Param("id") Integer id);
 
-    @Insert("Insert into users(name,created_at) values(#{name})")
+    @Insert("Insert into users(name) values(#{name})")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int persist(User user);
 
     @Update("UPDATE users SET name = #{name}, updated_at = now() WHERE id = #{id}")
     int update(User user);
 
-    @Delete("UPDATE chat_groups SET deleted_at = now() WHERE id = #{id}")
+    @Delete("UPDATE users SET deleted_at = now() WHERE id = #{id}")
     void delete(@Param("id") Integer id);
 
 }
