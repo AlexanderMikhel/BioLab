@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public User getById(@PathVariable("id") Integer id) {
+    public User getById(@PathVariable("id") Long id) {
         return userService.getById(id);
     }
 
@@ -34,13 +34,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public User update(@PathVariable("id") Integer id,
+    public User update(@PathVariable("id") Long id,
                        @RequestBody User user){
         return userService.update(user);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") Integer id){
+    public void delete(@PathVariable("id") Long id){
         userService.delete(id);
     }
 }

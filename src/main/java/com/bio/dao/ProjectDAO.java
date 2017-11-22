@@ -10,13 +10,13 @@ import java.util.List;
  */
 public interface ProjectDAO {
 
-    List<Project> getProjects(@Param("user_id") Integer UserId);
+    List<Project> getList(@Param("userId") Long userId);
 
-    Project getProjectbyId(@Param("id") Integer id);
+    Project getById(@Param("id") Long id);
 
-    int persist(Project project);
+    void add(Project project);
 
-    int update(Project project);
+    void update(Project project);
 
-    void delete(@Param("id") Integer id);
+    void delete(@Param("id") Long id);
 }

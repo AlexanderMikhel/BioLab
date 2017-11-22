@@ -20,7 +20,7 @@ public class UserService {
         return userDAO.getUsers();
     }
 
-    public User getById(Integer id){
+    public User getById(Long id){
         return userDAO.getUserbyId(id);
     }
 
@@ -33,7 +33,7 @@ public class UserService {
         return userDAO.getUserbyId(user.getId());
     }
 
-    public void delete(Integer id){
+    public void delete(Long id){
         userDAO.delete(id);
     }
 }
