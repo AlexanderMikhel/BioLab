@@ -9,14 +9,14 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users/#{user_id}/projects")
+@RequestMapping("/users/{user_id}/projects")
 public class ProjectController {
 
     @Autowired
     private ProjectService projectService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Project> getList(@PathParam("user_id") Long userId){
+    public List<Project> getList(@PathVariable("user_id") Long userId){
         return projectService.getList(userId);
     }
 
@@ -26,15 +26,15 @@ public class ProjectController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void create(@PathParam("user_id") Long userId,
+    public void create(@PathVariable("user_id") Long userId,
                        @RequestBody Project project){
-        project.setId(userId);
+        project.setUserId(userId);
         projectService.add(project);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Project update(@PathParam("id") Long id,
-                          @PathParam("user_id") Long userId,
+    public Project update(@PathVariable("id") Long id,
+                          @PathVariable("user_id") Long userId,
                           @RequestBody Project project){
         project.setId(id);
         project.setUserId(userId);

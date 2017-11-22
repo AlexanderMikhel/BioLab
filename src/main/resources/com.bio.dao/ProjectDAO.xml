@@ -5,7 +5,7 @@
 <mapper namespace="com.bio.dao.ProjectDAO">
 
     <sql id="baseParam">
-        id,
+        p.id,
         p.name as project_name,
         u.id as user_id,
         u.name as user_name
@@ -20,7 +20,7 @@
         SELECT
         <include refid="baseParam"/>
         <include refid="baseJoin"/>
-            WHERE u.id = #{UserId}
+            WHERE u.id = #{userId}
             AND p.deleted_at is null
      </select>
 
@@ -29,7 +29,6 @@
         <include refid="baseParam"/>
         <include refid="baseJoin"/>
         WHERE p.id = #{id}
-        AND u.id = #{userId}
         AND p.deleted_at is null
     </select>
 
@@ -53,7 +52,7 @@
     <resultMap id="projectMap" type="Project">
         <id property="id" column="id"/>
         <result property="name" column="project_name"/>
-        <collection property="user" resultMap="userMap"/>
+        <association property="user" resultMap="userMap"/>
     </resultMap>
 
     <resultMap id="userMap" type="User">
