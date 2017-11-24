@@ -19,8 +19,8 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<User> getUsers(){
-        return userService.getUsers();
+    public List<User> getList() {
+        return userService.getList();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -29,18 +29,20 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void create(@RequestBody User user){
+    public void create(@RequestBody User user) {
         userService.add(user);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public User update(@PathVariable("id") Long id,
-                       @RequestBody User user){
+                       @RequestBody User user) {
         return userService.update(user);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") Long id){
+    public void delete(@PathVariable("id") Long id) {
         userService.delete(id);
     }
+
+
 }
