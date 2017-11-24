@@ -6,6 +6,20 @@ create table if not exists users(
   deleted_at timestamp without time zone
 );
 
+create table if not exists profiles(
+id serial primary key,
+name character varying,
+login character varying,
+password character varying,
+created_at timestamp without time zone DEFAULT now(),
+updated_at timestamp without time zone,
+deleted_at timestamp without time zone,
+user_id INTEGER,
+CONSTRAINT fk_profiles_to_users FOREIGN KEY (user_id)
+REFERENCES users (id) MATCH SIMPLE
+ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+
 create table if not exists projects(
   id serial primary key,
   name character varying ,

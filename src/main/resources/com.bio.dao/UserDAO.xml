@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bio.dao.UserDAO">
 
-    <select id="getUsers" resultMap="userMap">
+    <select id="getList" resultMap="userMap">
         SELECT id,name FROM users WHERE deleted_at is null
     </select>
 

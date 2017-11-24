@@ -16,8 +16,8 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
-    public List<User> getUsers(){
-        return userDAO.getUsers();
+    public List<User> getList(){
+        return userDAO.getList();
     }
 
     public User getById(Long id){
