@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users/{user_id}/projects/{project_id}/modules")
+@RequestMapping("/modules")
 public class ModuleController {
 
     @Autowired

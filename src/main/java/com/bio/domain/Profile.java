@@ -1,5 +1,8 @@
 package com.bio.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Profile {
     private Integer id;
     private String name;
@@ -8,7 +11,7 @@ public class Profile {
     private User user;
     private Integer userId;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
