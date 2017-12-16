@@ -25,9 +25,7 @@ public class StringToProfileConverter implements Converter<String,Profile>{
     public Profile convert(String source) {
         try {
             Profile profile = objectMapper.readValue(source, Profile.class);
-
             setProfileIdIfEmpty(profile);
-
             return profile;
         } catch (IOException ex) {
             throw new RuntimeException("Unable to convert user. Reason: " + ex.getMessage(), ex);
