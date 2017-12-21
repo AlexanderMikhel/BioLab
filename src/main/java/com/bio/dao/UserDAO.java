@@ -6,10 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * @author Mikhel Alexander on 19.11.2017 email mikhelas@altarix.ru .
- */
-
 public interface UserDAO {
 
 

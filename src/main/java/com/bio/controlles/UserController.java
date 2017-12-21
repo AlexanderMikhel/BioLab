@@ -7,10 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @author Mikhel Alexander on 19.11.2017 email mikhelas@altarix.ru .
- */
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -36,6 +32,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public User update(@PathVariable("id") Long id,
                        @RequestBody User user) {
+        profile.getrole
         return userService.update(user);
     }
 

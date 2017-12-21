@@ -127,3 +127,47 @@ CREATE INDEX science_group__project_id
   ON science_group
   USING BTREE
   (project_id);
+
+  DROP INDEX IF EXISTS agencies_science_group_id;
+  CREATE INDEX agencies_science_group_id
+    ON agencies
+    USING BTREE
+    (science_group_id);
+
+
+  DROP INDEX IF EXISTS profile_role_profile_id;
+  CREATE INDEX profile_role_profile_id
+    ON profile_role
+    USING BTREE
+    (profile_id);
+
+
+  DROP INDEX IF EXISTS profile_role_role_id;
+  CREATE INDEX profile_role_role_id
+    ON profile_role
+    USING BTREE
+    (role_id);
+
+  DROP INDEX IF EXISTS profile_science_group_profile_id;
+  CREATE INDEX profile_science_group_profile_id
+    ON profile_science_group
+    USING BTREE
+    (profile_id);
+
+  DROP INDEX IF EXISTS profile_science_group_science_group_id;
+  CREATE INDEX profile_science_group_science_group_id
+    ON profile_science_group
+    USING BTREE
+    (science_group_id);
+
+  DROP INDEX IF EXISTS project_profile_project_id;
+  CREATE INDEX project_profile_project_id
+    ON project_profile
+    USING BTREE
+    (project_id);
+
+  DROP INDEX IF EXISTS project_profile_profile_id;
+  CREATE INDEX project_profile_profile_id
+    ON project_profile
+    USING BTREE
+    (profile_id);

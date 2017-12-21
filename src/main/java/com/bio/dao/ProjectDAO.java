@@ -5,9 +5,6 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
-/**
- * @author Mikhel Alexander on 20.11.2017 email mikhelas@altarix.ru .
- */
 public interface ProjectDAO {
 
     List<Project> getList(@Param("userId") Long userId);
