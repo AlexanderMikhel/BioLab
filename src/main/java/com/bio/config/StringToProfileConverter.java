@@ -3,6 +3,7 @@ package com.bio.config;
 import com.bio.BiolabApplication;
 import com.bio.domain.Profile;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
