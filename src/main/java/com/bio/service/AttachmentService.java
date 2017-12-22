@@ -1,5 +1,9 @@
 package com.bio.service;
 
+import com.bio.dao.AttachmentDAO;
+import com.bio.domain.Attachment;
+import com.bio.domain.Spectra;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,10 +16,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
-public class AttachmentRepository {
+public class AttachmentService {
 
-    @Transactional
-    public Attachment create(MultipartFile file, Integer userId, Boolean forMessages) {
+    @Autowired
+    private AttachmentDAO attachmentDAO;
+
+   /* @Transactional
+    public Attachment create(MultipartFile file, Integer userId) {
 
         Attachment attachment = new Attachment();
         attachment.setFileFileName(file.getOriginalFilename());
@@ -23,12 +30,6 @@ public class AttachmentRepository {
         attachment.setFileContentType(file.getContentType());
         attachment.setFileFileSize(file.getSize());
         attachment.setUserId(userId);
-
-        attachmentProcessorBean.processAttachment(attachment);
-
-        if (forMessages != null && forMessages) {
-            attachment.setResourceType("Mailboxer::Notification");
-        }
 
         attachmentsDAO.createAttachment(attachment);
         Integer idFileStorage = attachmentsDAO.getFileStorage(userId);
@@ -49,8 +50,15 @@ public class AttachmentRepository {
         }
 
         return attachment;
-    }
+    }*/
 
+   public void saveSpectraDataFromFiles(List<MultipartFile> files,Integer userId){
+
+   }
+
+   public Spectra getSpectraDataById(Integer id){
+       attachmentDAO.getSpectraDataById(id);
+   }
 
     public List<Attachment> getAttachments(Integer userId, Boolean forMessages) {
         List<Attachment> attachments = attachmentsDAO.getAttachments(userId, forMessages);

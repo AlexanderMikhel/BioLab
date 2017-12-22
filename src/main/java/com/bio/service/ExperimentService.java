@@ -14,9 +14,18 @@ public class ExperimentService {
     private ExperimentDAO experimentDAO;
 
     @Autowired
+    private AttachmentService attachmentService;
+
+    @Autowired
     private FunctionMap functionMap;
 
     public void create(Experiment experiment){
-        functionMap.getFunctionMap().get("vra").run(new Spectra(),);
+        int iterarion = experiment.getSpectraIds().size();
+        for(int i = 0; i<iterarion;i++) {
+            Spectra s = (Spectra) functionMap.getFunctionMap()
+                    .get(experiment.getExperimetParams().get(i).getFunctionName())
+                    .run(attachmentService.getSpectraDataById(experiment.getSpectraIds().get(i)),
+                            experiment.getExperimetParams().get(i).getParams());
+        }
     }
 }

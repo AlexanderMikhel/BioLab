@@ -7,36 +7,19 @@ import java.util.Date;
 public class Attachment {
 
     private String fileFileName;
-
-
     private String fileContentType;
-
-
     private Long fileFileSize;
-
     private Date fileUpdatedAt;
-
     private Integer userId;
-
     private Integer resourceId;
-
     private String resourceType;
-
     private String type;
-
     private Integer subjectId;
-
     private Integer classLevelId;
-
     private Integer educationLevelId;
-
     private String topic;
-
     private String keywords;
-
     private String genre;
-
-
     private String path;
 
     public String getFileFileName() {

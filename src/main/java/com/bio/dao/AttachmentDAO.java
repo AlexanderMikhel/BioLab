@@ -1,6 +1,7 @@
 package com.bio.dao;
 
 import com.bio.domain.Attachment;
+import com.bio.domain.Spectra;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -42,4 +43,13 @@ public interface AttachmentDAO {
     @Insert("INSERT INTO file_storages (id, user_id, created_at, updated_at) VALUES (#{idFileStorage}, #{userId}, now(), now())")
     void createFileStorage(@Param("idFileStorage") Integer idFileStorage,
                            @Param("userId") Integer userId);
+
+
+
+
+    @Insert("INSERT INTO spectra_data(user_id,spectra) VALUES (#{userId},#{spectra}::json)")
+    void saveSpectraDataFromFiles(Spectra spectra,@Param("userId") Integer userId);
+
+    @Select("Select spectra from spectra_data where id = #{id}")
+    Spectra getSpectraDataById(Integer id);
 }

@@ -1,4 +1,7 @@
 package com.bio.dao;
 
-public interface ProfileDAO {
+import com.bio.domain.Profile;
+
+public interface ProfileDAO extends BaseApi<Profile> {
+
 }

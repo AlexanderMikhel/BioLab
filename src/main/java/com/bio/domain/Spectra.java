@@ -15,7 +15,7 @@ public class Spectra {
         this.intensivity = intensivity;
     }
 
-    public List<Double> getWaweLength() {
+       public List<Double> getWaweLength() {
         return waweLength;
     }
 

@@ -1,7 +1,4 @@
 package com.bio.controlles;
-
-
-import com.bio.config.FunctionMap;
 import com.bio.domain.Experiment;
 import com.bio.service.ExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
