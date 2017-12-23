@@ -21,4 +21,6 @@ public class FunctionMap {
     public void setFunctionMap(Map<String, Algorithm> functionMap) {
         this.functionMap = functionMap;
     }
+
+    public List<Algorithm>
 }

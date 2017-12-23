@@ -15,4 +15,9 @@ public class ExperimentController {
     public void create(@RequestBody Experiment experiment) {
         experimentService.create(experiment);
     }
+
+    @RequestMapping(method = RequestMethod.GET,value = "/spectra")
+    public void getSpectraById(Integer id){
+
+    }
 }

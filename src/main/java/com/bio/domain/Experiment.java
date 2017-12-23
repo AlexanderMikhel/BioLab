@@ -3,9 +3,20 @@ package com.bio.domain;
 import java.util.List;
 
 public class Experiment {
+
+    private Long id;
     private String name;
     private List<Integer> spectraIds;
     private List<ExperimetParams> experimetParams;
+    private List<Spectra> spectras;
+
+    public List<Spectra> getSpectras() {
+        return spectras;
+    }
+
+    public void setSpectras(List<Spectra> spectras) {
+        this.spectras = spectras;
+    }
 
     public String getName() {
         return name;
