@@ -4,43 +4,42 @@ import java.util.List;
 
 public class UserProfile {
 
-    private Integer userId;
-    private Integer profileId;
-    private Integer AgencyId;
-    private String Type;
+    private Long userId;
+    private Long profileId;
+    private Long agencyId;
+    private String type;
     private List<String> roles;
 
-
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Integer getProfileId() {
+    public Long getProfileId() {
         return profileId;
     }
 
-    public void setProfileId(Integer profileId) {
+    public void setProfileId(Long profileId) {
         this.profileId = profileId;
     }
 
-    public Integer getAgencyId() {
-        return AgencyId;
+    public Long getAgencyId() {
+        return agencyId;
     }
 
-    public void setAgencyId(Integer agencyId) {
-        AgencyId = agencyId;
+    public void setAgencyId(Long agencyId) {
+        this.agencyId = agencyId;
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public void setType(String type) {
-        Type = type;
+        this.type = type;
     }
 
     public List<String> getRoles() {

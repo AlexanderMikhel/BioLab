@@ -7,5 +7,5 @@ import java.util.function.Function;
 
 @Component
 public interface Algorithm<T,E> extends Function<T,E> {
-    public T run(T t,List<E> e);
+    public E run(T t);
 }

@@ -3,11 +3,15 @@ create table IF NOT EXISTS spectra_data
   id serial not null
     constraint spectra_pkey
     primary key,
-  spectra json,
+  spectra VARCHAR,
   name VARCHAR,
+  profile_id INTEGER,
   created_at timestamp default now(),
   updated_at timestamp,
-  deleted_at timestamp
+  deleted_at timestamp,
+  CONSTRAINT fk_spectra_data_to_profiles FOREIGN KEY (profile_id)
+  REFERENCES profiles (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
 create TABLE IF NOT EXISTS experiments

@@ -19,7 +19,7 @@ public class ExperimentService {
     @Autowired
     private FunctionMap functionMap;
 
-    public void create(Experiment experiment){
+   /* public void create(Experiment experiment){
         int iterarion = experiment.getSpectraIds().size();
         for(int i = 0; i<iterarion;i++) {
             Spectra s = (Spectra) functionMap.getFunctionMap()
@@ -27,5 +27,5 @@ public class ExperimentService {
                     .run(attachmentService.getSpectraDataById(experiment.getSpectraIds().get(i)),
                             experiment.getExperimetParams().get(i).getParams());
         }
-    }
+    }*/
 }

@@ -1,4 +1,4 @@
-package com.bio.config;
+package com.bio.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +11,7 @@ import java.io.IOException;
 
 @Component
 public class StringConverter {
+
     private ObjectMapper objectMapper;
 
     @Autowired
@@ -18,12 +19,22 @@ public class StringConverter {
         this.objectMapper = objectMapper;
     }
 
-    public <T> String convert(T t) {
+    public <T> String convertForHTTPsend(T t) {
         String str = null;
         try {
             str = objectMapper
                     .writeValueAsString(t)
                     .replace("\"", "\\\"");
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    public <T> String convert(T t) {
+        String str = null;
+        try {
+            str = objectMapper.writeValueAsString(t);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

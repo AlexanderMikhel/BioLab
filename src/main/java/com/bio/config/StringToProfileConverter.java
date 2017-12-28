@@ -2,6 +2,7 @@ package com.bio.config;
 
 import com.bio.BiolabApplication;
 import com.bio.domain.Profile;
+import com.bio.domain.UserProfile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.springframework.core.convert.converter.Converter;
@@ -17,31 +18,17 @@ import java.io.IOException;
  * This class use to convert String to Profile.class in @requestHeader in controllers
  */
 @Service
-public class StringToProfileConverter implements Converter<String,Profile>{
+public class StringToProfileConverter implements Converter<String, UserProfile> {
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Override
-    public Profile convert(String source) {
+    public UserProfile convert(String source) {
         try {
-            Profile profile = objectMapper.readValue(source, Profile.class);
-
-            setProfileIdIfEmpty(profile);
-
-            return profile;
+            return objectMapper.readValue(source, UserProfile.class);
         } catch (IOException ex) {
             throw new RuntimeException("Unable to convert user. Reason: " + ex.getMessage(), ex);
-        }
-    }
-
-    private void setProfileIdIfEmpty(Profile profile) {
-        if (profile.getId() == null) {
-            RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-            if (requestAttributes instanceof ServletRequestAttributes) {
-                String profileId = ((ServletRequestAttributes) requestAttributes).getRequest().getHeader(BiolabApplication.PROFILE_ID_HEADER);
-                profile.setId(Integer.parseInt(profileId));
-            }
         }
     }
 }

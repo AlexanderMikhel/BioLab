@@ -1,33 +1,57 @@
 package com.bio.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+
 public class Spectra {
+    private Long id;
+    private Long profileId;
+    private String name;
+    private List<Point> points;
+    private String StringPoints;
 
-    List<Double> waweLength;
-    List<Double> intensivity;
-
-    public Spectra() {
+    public Spectra(){
+        points = new ArrayList<>();
     }
 
-    public Spectra(List<Double> waweLength, List<Double> intensivity) {
-        this.waweLength = waweLength;
-        this.intensivity = intensivity;
+    public String getName() {
+        return name;
     }
 
-       public List<Double> getWaweLength() {
-        return waweLength;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setWaweLength(List<Double> waweLength) {
-        this.waweLength = waweLength;
+    public String getStringPoints() {
+        return StringPoints;
     }
 
-    public List<Double> getIntensivity() {
-        return intensivity;
+    public void setStringPoints(String stringPoints) {
+        StringPoints = stringPoints;
     }
 
-    public void setIntensivity(List<Double> intensivity) {
-        this.intensivity = intensivity;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(Long profileId) {
+        this.profileId = profileId;
+    }
+
+    public List<Point> getPoints() {
+        return points;
+    }
+
+    public void setPoints(List<Point> points) {
+        this.points = points;
     }
 }

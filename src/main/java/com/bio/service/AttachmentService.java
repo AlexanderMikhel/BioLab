@@ -3,7 +3,10 @@ package com.bio.service;
 import com.bio.dao.AttachmentDAO;
 import com.bio.domain.Attachment;
 import com.bio.domain.Spectra;
+import com.bio.utils.SpectaFileReader;
+import com.bio.utils.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,11 +19,17 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
+@Component
 public class AttachmentService {
 
     @Autowired
     private AttachmentDAO attachmentDAO;
 
+    @Autowired
+    private SpectaFileReader spectaFileReader;
+
+    @Autowired
+    private StringConverter stringConverter;
    /* @Transactional
     public Attachment create(MultipartFile file, Integer userId) {
 
@@ -52,23 +61,28 @@ public class AttachmentService {
         return attachment;
     }*/
 
-   public void saveSpectraDataFromFiles(List<MultipartFile> files,Integer userId){
+    public void saveSpectraDataFromFiles(List<MultipartFile> files, Long profileId) throws IOException {
+        List<Spectra> list = spectaFileReader.readFromFile(spectaFileReader.multipartToFile(files), profileId);
+        for (Spectra s : list) {
+            s.setStringPoints(stringConverter.convert(s.getPoints()));
+            attachmentDAO.saveSpectraDataFromFiles(s);
+        }
 
-   }
+    }
 
-   public Spectra getSpectraDataById(Integer id){
-       attachmentDAO.getSpectraDataById(id);
-   }
+    public Spectra getSpectraDataById(Integer id) {
+        return attachmentDAO.getSpectraDataById(id);
+    }
 
     public List<Attachment> getAttachments(Integer userId, Boolean forMessages) {
-        List<Attachment> attachments = attachmentsDAO.getAttachments(userId, forMessages);
+        List<Attachment> attachments = attachmentDAO.getAttachments(userId, forMessages);
         for (Attachment attachment : attachments) {
-            attachmentProcessorBean.processAttachment(attachment);
+            //attachmentProcessorBean.processAttachment(attachment);
         }
         return attachments;
     }
 
-    public void deleteAttachment(Integer id, Integer userId) {
+    /*public void deleteAttachment(Integer id, Integer userId) {
         Attachment attachment = attachmentsDAO.getAttachmentById(id);
         attachmentProcessorBean.processAttachment(attachment);
         attachmentsDAO.deleteFileStorageEntries(id, userId);
@@ -85,5 +99,5 @@ public class AttachmentService {
             attachmentProcessorBean.processAttachment(attachment);
         }
         return attachments;
-    }
+    }*/
 }

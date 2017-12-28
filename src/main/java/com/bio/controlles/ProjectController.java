@@ -28,7 +28,7 @@ public class ProjectController {
     @RequestMapping(method = RequestMethod.POST)
     public void create(@PathVariable("user_id") Long userId,
                        @RequestBody Project project){
-        project.setUserId(userId);
+        //project.setUserId(userId);
         projectService.add(project);
     }
 
@@ -37,7 +37,7 @@ public class ProjectController {
                           @PathVariable("user_id") Long userId,
                           @RequestBody Project project){
         project.setId(id);
-        project.setUserId(userId);
+        //project.setUserId(userId);
         return projectService.update(project);
     }
 
