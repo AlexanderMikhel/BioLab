@@ -17,6 +17,26 @@ CREATE TABLE IF NOT EXISTS roles (
   deleted_at TIMESTAMP WITHOUT TIME ZONE
 );
 
+CREATE TABLE IF NOT EXISTS projects (
+  id         SERIAL PRIMARY KEY,
+  name       CHARACTER VARYING,
+  created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITHOUT TIME ZONE,
+  deleted_at TIMESTAMP WITHOUT TIME ZONE
+);
+
+CREATE TABLE IF NOT EXISTS science_group (
+  id         SERIAL PRIMARY KEY,
+  name       CHARACTER VARYING,
+  project_id INTEGER,
+  created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITHOUT TIME ZONE,
+  deleted_at TIMESTAMP WITHOUT TIME ZONE,
+  CONSTRAINT fk_science_group_to_projects FOREIGN KEY (project_id)
+  REFERENCES projects (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
+
+);
+
 CREATE TABLE IF NOT EXISTS agencies (
   id               SERIAL PRIMARY KEY,
   name             CHARACTER VARYING,
@@ -34,13 +54,6 @@ CREATE TABLE IF NOT EXISTS agencies (
   ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
-CREATE TABLE IF NOT EXISTS projects (
-  id         SERIAL PRIMARY KEY,
-  name       CHARACTER VARYING,
-  created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITHOUT TIME ZONE,
-  deleted_at TIMESTAMP WITHOUT TIME ZONE
-);
 
 CREATE TABLE IF NOT EXISTS profiles (
   id         SERIAL PRIMARY KEY,
@@ -62,18 +75,6 @@ CREATE TABLE IF NOT EXISTS profiles (
   ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
-CREATE TABLE IF NOT EXISTS science_group (
-  id         SERIAL PRIMARY KEY,
-  name       CHARACTER VARYING,
-  project_id INTEGER,
-  created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITHOUT TIME ZONE,
-  deleted_at TIMESTAMP WITHOUT TIME ZONE,
-  CONSTRAINT fk_science_group_to_projects FOREIGN KEY (project_id)
-  REFERENCES projects (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
-
-);
-
 CREATE TABLE IF NOT EXISTS profile_science_group (
   profile_id      INTEGER,
   science_group_id INTEGER,
@@ -83,7 +84,7 @@ CREATE TABLE IF NOT EXISTS profile_science_group (
   CONSTRAINT fk_profile_science_group_to_profiles FOREIGN KEY (profile_id)
   REFERENCES profiles (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT fk_profile_science_group_to_scienceGroup FOREIGN KEY (science_group_id)
-  REFERENCES scienceGroup (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
+  REFERENCES science_group (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
 CREATE TABLE IF NOT EXISTS profile_role (
@@ -128,46 +129,46 @@ CREATE INDEX science_group__project_id
   USING BTREE
   (project_id);
 
-  DROP INDEX IF EXISTS agencies_science_group_id;
-  CREATE INDEX agencies_science_group_id
-    ON agencies
-    USING BTREE
-    (science_group_id);
+DROP INDEX IF EXISTS agencies_science_group_id;
+CREATE INDEX agencies_science_group_id
+  ON agencies
+  USING BTREE
+  (science_group_id);
 
 
-  DROP INDEX IF EXISTS profile_role_profile_id;
-  CREATE INDEX profile_role_profile_id
-    ON profile_role
-    USING BTREE
-    (profile_id);
+DROP INDEX IF EXISTS profile_role_profile_id;
+CREATE INDEX profile_role_profile_id
+  ON profile_role
+  USING BTREE
+  (profile_id);
 
 
-  DROP INDEX IF EXISTS profile_role_role_id;
-  CREATE INDEX profile_role_role_id
-    ON profile_role
-    USING BTREE
-    (role_id);
+DROP INDEX IF EXISTS profile_role_role_id;
+CREATE INDEX profile_role_role_id
+  ON profile_role
+  USING BTREE
+  (role_id);
 
-  DROP INDEX IF EXISTS profile_science_group_profile_id;
-  CREATE INDEX profile_science_group_profile_id
-    ON profile_science_group
-    USING BTREE
-    (profile_id);
+DROP INDEX IF EXISTS profile_science_group_profile_id;
+CREATE INDEX profile_science_group_profile_id
+  ON profile_science_group
+  USING BTREE
+  (profile_id);
 
-  DROP INDEX IF EXISTS profile_science_group_science_group_id;
-  CREATE INDEX profile_science_group_science_group_id
-    ON profile_science_group
-    USING BTREE
-    (science_group_id);
+DROP INDEX IF EXISTS profile_science_group_science_group_id;
+CREATE INDEX profile_science_group_science_group_id
+  ON profile_science_group
+  USING BTREE
+  (science_group_id);
 
-  DROP INDEX IF EXISTS project_profile_project_id;
-  CREATE INDEX project_profile_project_id
-    ON project_profile
-    USING BTREE
-    (project_id);
+DROP INDEX IF EXISTS project_profile_project_id;
+CREATE INDEX project_profile_project_id
+  ON project_profile
+  USING BTREE
+  (project_id);
 
-  DROP INDEX IF EXISTS project_profile_profile_id;
-  CREATE INDEX project_profile_profile_id
-    ON project_profile
-    USING BTREE
-    (profile_id);
+DROP INDEX IF EXISTS project_profile_profile_id;
+CREATE INDEX project_profile_profile_id
+  ON project_profile
+  USING BTREE
+  (profile_id);
