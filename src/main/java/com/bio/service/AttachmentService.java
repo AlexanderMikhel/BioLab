@@ -70,7 +70,7 @@ public class AttachmentService {
 
     }
 
-    public Spectra getSpectraDataById(Integer id) {
+    public Spectra getSpectraDataById(Long id) {
         return attachmentDAO.getSpectraDataById(id);
     }
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bio.dao.ProjectDAO">
+
+    <select id="getSpectraDataById" resultMap="spectraMap">
+        SELECT
+        id,
+        name,
+        spectra,
+        profile_id
+        FROM spectra_data
+        WHERE id = #{id}
+        AND deleted_at is null
+    </select>
+
+    <resultMap id="spectraMap" type="Spectra">
+        <id property="id" column="id"/>
+        <result property="name" column="project_name"/>
+        <result property="profileId" column="profile_id"/>
+        <result property="points" column="spectra" typeHandler="com.bio.utils.PointsListTypeHandler"/>
+    </resultMap>
+
+
+</mapper>

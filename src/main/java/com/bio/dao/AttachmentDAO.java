@@ -50,6 +50,6 @@ public interface AttachmentDAO {
     @Insert("INSERT INTO spectra_data(profile_id,spectra,name) VALUES (#{profileId},#{stringPoints},#{name})")
     void saveSpectraDataFromFiles(Spectra spectra);
 
-    @Select("Select spectra from spectra_data where id = #{id}")
-    Spectra getSpectraDataById(Integer id);
+
+    Spectra getSpectraDataById(Long id);
 }
