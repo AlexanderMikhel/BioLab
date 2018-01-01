@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bio.dao.ProjectDAO">
+<mapper namespace="com.bio.dao.AttachmentDAO">
 
     <select id="getSpectraDataById" resultMap="spectraMap">
         SELECT
         id,
         name,
-        spectra,
+        spectra as points,
         profile_id
         FROM spectra_data
         WHERE id = #{id}
@@ -17,9 +17,9 @@
 
     <resultMap id="spectraMap" type="Spectra">
         <id property="id" column="id"/>
-        <result property="name" column="project_name"/>
+        <result property="name" column="name"/>
         <result property="profileId" column="profile_id"/>
-        <result property="points" column="spectra" typeHandler="com.bio.utils.PointsListTypeHandler"/>
+        <result property="points" column="points" typeHandler="com.bio.utils.PointsListTypeHandler"/>
     </resultMap>
 
 

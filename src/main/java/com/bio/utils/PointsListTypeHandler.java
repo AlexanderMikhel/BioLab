@@ -12,12 +12,13 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Mikhel Alexander on 31.12.2017 email mikhelas@altarix.ru .
- * Доработать обработку исключений
- * */
+ *         Доработать обработку исключений
+ */
 public class PointsListTypeHandler implements TypeHandler<List<Point>> {
     @Override
     public void setParameter(PreparedStatement ps, int columnIndex, List<Point> parameter, JdbcType jdbcType) throws SQLException {
@@ -39,7 +40,7 @@ public class PointsListTypeHandler implements TypeHandler<List<Point>> {
         return deserializeFromJson(cs.getString(columnIndex));
     }
 
-    private String serializeToJson(List<Point> parameter){
+    private String serializeToJson(List<Point> parameter) {
         if (parameter == null) {
             return null;
         }
@@ -49,7 +50,7 @@ public class PointsListTypeHandler implements TypeHandler<List<Point>> {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return null;
+        return new String();
     }
 
     private List<Point> deserializeFromJson(String value) {
@@ -63,6 +64,6 @@ public class PointsListTypeHandler implements TypeHandler<List<Point>> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
     }
 }

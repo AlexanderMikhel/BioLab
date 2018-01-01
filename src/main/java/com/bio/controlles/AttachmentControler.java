@@ -23,7 +23,7 @@ public class AttachmentControler {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     Spectra getSpectra(@RequestHeader(value = "Profile") UserProfile user,
-                       @PathVariable Long id) {
+                       @PathVariable Long id) throws IOException {
         return attachmentService.getSpectraDataById(id);
     }
 

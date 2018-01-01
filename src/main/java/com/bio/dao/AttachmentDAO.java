@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 public interface AttachmentDAO {
+
     Attachment getAttachmentById(@Param("id") Integer id);
 
     List<Attachment> getAttachments(@Param("userId") Integer userId,
@@ -47,9 +48,9 @@ public interface AttachmentDAO {
 
 
 
-    @Insert("INSERT INTO spectra_data(profile_id,spectra,name) VALUES (#{profileId},#{stringPoints},#{name})")
+    @Insert("INSERT INTO spectra_data(profile_id,spectra,name) VALUES (#{profileId},#{stringPoints}::json,#{name})")
     void saveSpectraDataFromFiles(Spectra spectra);
 
 
-    Spectra getSpectraDataById(Long id);
+    Spectra getSpectraDataById(@Param("id") Long id);
 }

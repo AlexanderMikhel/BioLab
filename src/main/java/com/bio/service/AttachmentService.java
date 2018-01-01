@@ -70,8 +70,9 @@ public class AttachmentService {
 
     }
 
-    public Spectra getSpectraDataById(Long id) {
-        return attachmentDAO.getSpectraDataById(id);
+    public Spectra getSpectraDataById(Long id) throws IOException {
+        return  attachmentDAO.getSpectraDataById(id);
+
     }
 
     public List<Attachment> getAttachments(Integer userId, Boolean forMessages) {
