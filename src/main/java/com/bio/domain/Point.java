@@ -1,17 +1,22 @@
 package com.bio.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author Mikhel Alexander on 25.12.2017 email mikhelas@altarix.ru .
  */
+
 public class Point {
 
     private Double intensity;
-    private Double waveLenght;
+    @JsonProperty("wave_length")
+    private Double waveLength;
 
-    public Point(Double intensity, Double waveLenght) {
+    public Point(Double intensity, Double waveLength) {
         this.intensity = intensity;
-        this.waveLenght = waveLenght;
+        this.waveLength = waveLength;
     }
+    public Point(){}
 
     public Double getIntensity() {
         return intensity;
@@ -21,11 +26,11 @@ public class Point {
         this.intensity = intensity;
     }
 
-    public Double getWaveLenght() {
-        return waveLenght;
+    public Double getWaveLength() {
+        return waveLength;
     }
 
-    public void setWaveLenght(Double waveLenght) {
-        this.waveLenght = waveLenght;
+    public void setWaveLength(Double waveLength) {
+        this.waveLength = waveLength;
     }
 }
