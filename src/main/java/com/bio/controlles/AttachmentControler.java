@@ -1,34 +1,52 @@
 package com.bio.controlles;
 
-import com.bio.domain.Attachment;
 import com.bio.domain.UserProfile;
-import com.bio.service.AttachmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@RestController
-@RequestMapping("/attachments")
 public class AttachmentControler {
 
     @Autowired
-    AttachmentService attachmentService;
+    AttachmentsRepository attachmentsRepository;
 
-    @RequestMapping(method = RequestMethod.POST)
-    void create(@RequestHeader(value = "Profile") UserProfile user,
-                @RequestParam("files") List<MultipartFile> files) {
-        if (files == null) {
-            throw new RuntimeException();
+    @Autowired
+    private MessageService messageService;
+
+    @ApiOperation(value = "Получить список доступных файлов", response = Attachment.class, responseContainer = "List")
+    @RequestMapping(method = RequestMethod.GET)
+    List<Attachment> get(@RequestHeader(value = USER_HEADER) UserProfile user,
+                         @RequestParam(value = "for_messages", required = false) Boolean forMessages,
+                         @RequestParam(value = "ids", required = false) String ids) {
+        List<Integer> attachmentIds = new ArrayList<>();
+        if (isNotBlank(ids)) {
+            Arrays.stream(ids.split(",")).forEach(id -> attachmentIds.add(Integer.valueOf(id)));
         }
-        try {
-            attachmentService.saveSpectraDataFromFiles(files, user.getProfileId());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return attachmentIds.isEmpty() ? attachmentsRepository.getAttachments(user.getId(), forMessages)
+                : attachmentsRepository.getAttachmentsById(attachmentIds);
     }
+
+    @ApiOperation(value = "Загрузить файл", response = Attachment.class)
+    @RequestMapping(method = RequestMethod.POST)
+    Attachment create(@RequestHeader(value = USER_HEADER) UserProfile user,
+                      @RequestParam(value = "for_messages", defaultValue = "false") Boolean forMessages,
+                      @RequestPayload MultipartFile file) {
+        if (file == null) {
+            throw new RestException(messageService.getMessage("error.not-found.create-attachment"));
+        }
+        return attachmentsRepository.create(file, user.getId(), forMessages);
+
+    }
+
+    @ApiOperation(value = "Удалить файл")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    void delete(@RequestHeader(value = USER_HEADER) UserProfile user,
+                @PathVariable("id") Integer id) {
+        attachmentsRepository.deleteAttachment(id, user.getId());
+    }
+
 }

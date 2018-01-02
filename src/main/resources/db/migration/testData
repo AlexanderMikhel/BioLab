@@ -1,5 +1,1 @@
-INSERT INTO users(name) VALUES ('Alexey'),('Vladislav'),('Alexander');
-INSERT INTO projects(name,user_id) VALUES ('Project1',1),('Project2',2),('Project3',3);
-INSERT INTO modules (name,project_id) VALUES ('Module1',1),('Module2',1),('Module3',3);
-INSERT INTO profiles (name, login, password, user_id) VALUES ('Student','Student1','Qwerty',1),('Director','Boss','Super',2),('Student','Student2','Qwerty',3),
-('Assist','Assist1','Super',4),('Assist','Assist2','Super',5);
+
