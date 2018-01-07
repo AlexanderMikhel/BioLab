@@ -32,7 +32,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public User update(@PathVariable("id") Long id,
                        @RequestBody User user) {
-       // profile.getrole
+        user.setId(id);
         return userService.update(user);
     }
 

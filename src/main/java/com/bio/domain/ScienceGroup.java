@@ -1,17 +1,28 @@
 package com.bio.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class ScienceGroup {
 
-    private Integer id;
+
+    private Long id;
     private String name;
     private Project project;
-    private Profile profile;
+    private Integer projectId;
 
-    public Integer getId() {
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

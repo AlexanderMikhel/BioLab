@@ -7,20 +7,21 @@
     <sql id="baseParam">
         p.id,
         p.name as project_name,
-        u.id as user_id,
-        u.name as user_name
+        pr.id as profile_id,
+        pr.name as profile_name
     </sql>
 
     <sql id="baseJoin">
         from projects p
-        JOIN users u ON p.user_id = u.id
+        LEFT JOIN project_profile pp ON p.id = pp.project_id
+        LEFT JOIN profiles pr ON pp.profile_id = pr.id
     </sql>
 
     <select id="getList" resultMap="projectMap">
         SELECT
         <include refid="baseParam"/>
         <include refid="baseJoin"/>
-            WHERE u.id = #{userId}
+            WHERE pr.id = #{profileId}
             AND p.deleted_at is null
      </select>
 
@@ -33,7 +34,7 @@
     </select>
 
     <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO projects(name,user_id) VALUES (#{name},#{userId})
+        INSERT INTO projects(name) VALUES (#{name})
     </insert>
 
     <update id="update">
@@ -52,12 +53,12 @@
     <resultMap id="projectMap" type="Project">
         <id property="id" column="id"/>
         <result property="name" column="project_name"/>
-        <association property="user" resultMap="userMap"/>
+        <association property="profile" resultMap="profileMap"/>
     </resultMap>
 
-    <resultMap id="userMap" type="User">
-        <id property="id" column="user_id"/>
-        <result property="name" column="user_name"/>
+    <resultMap id="profileMap" type="Profile">
+        <id property="id" column="profile_id"/>
+        <result property="name" column="profile_name"/>
     </resultMap>
 
 </mapper>

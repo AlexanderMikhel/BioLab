@@ -1,9 +1,13 @@
 package com.bio.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Project {
 
+    @JsonIgnore
     private Long id;
     private String name;
+    @JsonIgnore
     private Profile profile;
 
     public Profile getProfile() {

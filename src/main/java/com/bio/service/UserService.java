@@ -17,7 +17,8 @@ public class UserService {
     private UserDAO userDAO;
 
     public List<User> getList(){
-        return userDAO.getList();
+        List<User> L = userDAO.getList();
+        return L;
     }
 
     public User getById(Long id){

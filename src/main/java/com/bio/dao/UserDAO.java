@@ -9,18 +9,17 @@ import java.util.List;
 public interface UserDAO {
 
 
-    List<User> getList(); // исправить
+    List<User> getList();
 
-    @Select("SELECT id,name FROM users WHERE id = #{id} and deleted_at is null")
+
     User getUserbyId(@Param("id") Long id);
 
-    @Insert("Insert into users(name) values(#{name})")
-    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+
     void add(User user);
 
-    @Update("UPDATE users SET name = #{name}, updated_at = now() WHERE id = #{id}")
+
     void update(User user);
 
-    @Delete("UPDATE users SET deleted_at = now() WHERE id = #{id}")
+
     void delete(@Param("id") Long id);
 }
