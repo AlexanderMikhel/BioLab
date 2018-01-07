@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
 
-    @JsonIgnore
+
     private Long id;
     @JsonProperty("first_name")
     private String firstName;
