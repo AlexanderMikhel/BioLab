@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bio.dao.ScienceGroupDAO">
+
+
+    <sql id="baseParam">
+        sg.id,
+        sg.name as science_group_name,
+        sg.project_id as science_group_project_id,
+        p.id as project_id,
+        p.name as project_name
+    </sql>
+
+    <sql id="baseJoin">
+        FROM science_group sg
+        JOIN projects p ON sg.project_id = p.id
+    </sql>
+
+    <select id="getScienceGroupById" resultMap="scienceGroupMap">
+        SELECT
+        <include refid="baseParam"/>
+        <include refid="baseJoin"/>
+        WHERE sg.id = #{id}
+        AND sg.deleted_at is null
+    </select>
+
+    <select id="getList" resultMap="scienceGroupMap">
+        SELECT
+        <include refid="baseParam"/>
+        <include refid="baseJoin"/>
+        WHERE sg.deleted_at is null
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO science_group (name, project_id) VALUES (#{name}, #{projectId})
+    </insert>
+
+    <update id="update">
+        UPDATE science_group
+        SET
+            name       = #{name},
+            updated_at = now()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE science_group
+        SET
+            deleted_at = now()
+        WHERE id = #{id}
+    </delete>
+
+    <resultMap id="scienceGroupMap" type="ScienceGroup">
+        <id property="id" column="id"/>
+        <result property="name" column="science_group_name"/>
+        <result property="projectId" column="science_group_project_id"/>
+        <association property="project" resultMap="projectMap"/>
+    </resultMap>
+
+    <resultMap id="projectMap" type="Project">
+        <result property="name" column="project_name"/>
+    </resultMap>
+
+</mapper>

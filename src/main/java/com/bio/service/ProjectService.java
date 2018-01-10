@@ -14,8 +14,9 @@ public class ProjectService {
     private ProjectDAO projectDAO;
 
 
-    public List<Project> getList(Long userId){
-        return projectDAO.getList(userId);
+    public List<Project> getList(Long profileId){
+        List<Project> L = projectDAO.getList(profileId);
+        return L;
     }
 
     public Project getById(Long id) {

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bio.dao.ProfileDAO">
+
+    <sql id="baseParam">
+        p.id,
+        p.name as profile_name,
+        p.login as profile_login,
+        p.password as profile_password,
+        p.user_id as profile_user_id,
+        u.first_name as user_first_name,
+        u.middle_name as user_middle_name,
+        u.last_name as user_last_name
+    </sql>
+
+    <sql id="baseJoin">
+        FROM profiles p
+        JOIN users u ON p.user_id = u.id
+    </sql>
+
+    <select id="getProfileById" resultMap="profileMap">
+        SELECT
+        <include refid="baseParam"/>
+        <include refid="baseJoin"/>
+        WHERE p.id = #{id}
+        AND p.deleted_at is null
+    </select>
+
+    <select id="getList" resultMap="profileMap">
+        SELECT
+        <include refid="baseParam"/>
+        <include refid="baseJoin"/>
+        WHERE p.deleted_at is null
+    </select>
+
+    <delete id="delete">
+        UPDATE profiles
+        SET deleted_at = now()
+        WHERE id = #{id}
+    </delete>
+
+    <update id="update">
+        UPDATE profiles
+        SET
+            name       = #{name},
+            login      = #{login},
+            password   = #{password},
+            updated_at = now()
+        WHERE id = #{id}
+    </update>
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO profiles (name, login, password, user_id, agency_id)
+        VALUES (#{name}, #{login}, #{password}, #{userId}, #{agencyId})
+    </insert>
+
+    <resultMap id="profileMap" type="Profile">
+        <id property="id" column="id"/>
+        <result property="name" column="profile_name"/>
+        <result property="login" column="profile_login"/>
+        <result property="password" column="profile_password"/>
+        <result property="userId" column="profile_user_id"/>
+        <association property="user" resultMap="userMap"/>
+    </resultMap>
+
+    <resultMap id="userMap" type="User">
+        <result property="firstName" column="user_first_name"/>
+        <result property="middleName" column="user_middle_name"/>
+        <result property="lastName" column="user_last_name"/>
+    </resultMap>
+</mapper>

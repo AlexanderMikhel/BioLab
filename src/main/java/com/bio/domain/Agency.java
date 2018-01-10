@@ -1,20 +1,32 @@
 package com.bio.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Agency {
 
-    private Integer id;
+    private Long id;
     private String name;
     private String address;
     private String phone;
     private String country;
     private String city;
+    private Integer scienceGroupId;
     private ScienceGroup scienceGroup;
 
-    public Integer getId() {
+    public Integer getScienceGroupId() {
+        return scienceGroupId;
+    }
+
+    public void setScienceGroupId(Integer scienceGroupId) {
+        this.scienceGroupId = scienceGroupId;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -65,4 +77,5 @@ public class Agency {
     public void setScienceGroup(ScienceGroup scienceGroup) {
         this.scienceGroup = scienceGroup;
     }
+
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProjectDAO {
 
-    List<Project> getList(@Param("userId") Long userId);
+    List<Project> getList(@Param("profileId") Long profileId);
 
     Project getById(@Param("id") Long id);
 

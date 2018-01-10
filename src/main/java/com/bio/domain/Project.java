@@ -1,6 +1,9 @@
 package com.bio.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Project {
+
 
     private Long id;
     private String name;
