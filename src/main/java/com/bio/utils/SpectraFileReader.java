@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
 
 @Component
-public class SpectaFileReader {
+public class SpectraFileReader {
 
     public List<File> multipartToFile(List<MultipartFile> multipartFiles) throws IllegalStateException, IOException {
 
@@ -47,7 +47,7 @@ public class SpectaFileReader {
                 Point p = new Point(Double.valueOf(s.get(i)),Double.valueOf(s.get(i)));
                 spectra.getPoints().add(p);
             }
-            spectra.setProfileId(profileId);
+
             spectra.setName(file.getName());
             spectras.add(spectra);
         }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bio.dao.DirectoryDAO">
+
+    <select id="getList" resultMap="directoryMap">
+       SELECT
+       d.id,
+       d.name directory_name,
+       a.id file_id
+       a.file_file_name,
+       a.file_content_type,
+       sp.name spectra_name,
+       sp.id spectra_id
+       FROM directories d
+       LEFT JOIN attachments a on d.id = a.directory_id
+       LEFT JOIN spectra_data sp on d.id = sp.directory_id
+       WHERE p.deleted_at is null
+       and a.deleted_at is null
+       and sp.deleted_at is null
+       and parent_directory_id = #{parentDirectoryId}
+       and user_id = #{userId}
+    </select>
+
+    <resultMap id="directoryMap" type="Directory">
+        <id property="id" column="id"/>
+        <result property="name" column="directory_name"/>
+        <collection property="spectras" resultMap="spectraMap"/>
+        <collection property="attachments" resultMap="attachmentMap"/>
+    </resultMap>
+
+    <resultMap id="spectraMap" type="Spectra">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <resultMap id="attachmentMap" type="Attachment">
+        <id property="id" column="file_id"/>
+        <result property="fileFileName" column="file_file_name"/>
+        <result property="fileContentType" column="file_content_type"/>
+    </resultMap>
+
+</mapper>

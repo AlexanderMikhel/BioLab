@@ -5,8 +5,9 @@ import java.util.List;
 
 
 public class Spectra {
+
     private Long id;
-    private Long profileId;
+    private Long directoryId;
     private String name;
     private List<Point> points;
     private String StringPoints;
@@ -39,12 +40,12 @@ public class Spectra {
         this.id = id;
     }
 
-    public Long getProfileId() {
-        return profileId;
+    public Long getDirectoryId() {
+        return directoryId;
     }
 
-    public void setProfileId(Long profileId) {
-        this.profileId = profileId;
+    public void setDirectoryId(Long directoryId) {
+        this.directoryId = directoryId;
     }
 
     public List<Point> getPoints() {

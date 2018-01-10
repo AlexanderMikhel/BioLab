@@ -8,49 +8,25 @@ import java.util.List;
 
 public interface AttachmentDAO {
 
-    Attachment getAttachmentById(@Param("id") Integer id);
+    @Select("SELECT id,file_file_name,file_content_type,file_file_size from attachments where id = #{id} and deleted_at is null")
+    Attachment get(@Param("id") Long id);
 
-    List<Attachment> getAttachments(@Param("userId") Integer userId,
-                                    @Param("forMessages") Boolean forMessages);
+    List<Attachment> getList(@Param("ids") List<Long> ids,
+                             @Param("name") String name,
+                             @Param("directoryId") Long directoryId);
 
-    @Delete("Update attachments SET deleted_at = now() WHERE id=#{id}")
-    void deleteAttachment(@Param("id") Integer id);
+    @Delete("Update attachments set deleted_at = now() where id = #{id}")
+    void delete(@Param("id") Long id);
 
-    List<Attachment> getAttachmentsById(@Param("ids") List<Integer> ids);
+    @Insert("Insert into attachments(file_file_name,file_content_type,file_file_size,directory_id)" +
+            "values(fileFileName,fileContentType,fileFileSize,directoryId) returning id")
+    List<Long> add(Attachment attachment);
 
-    void createAttachment(@Param("attachment") Attachment attachment);
+    @Update("update attachments set updated_at = now(), file_file_name = #{fileFileName}, file_content_type = #{fileContentType}," +
+            "file_file_size = #{fileFileSize},directory_id=#{directoryId}")
+    void update(Attachment attachment);
 
-    @Select("SELECT nextVal('lesson_comments_id_seq')")
-    Integer getAttachmentId();
+    @Select("SELECT nextVal('attachments_id_seq')")
+    Long getAttachmentId();
 
-    Boolean existenceOfLink(@Param("id") Integer id);
-
-    @Update("Update file_storage_entries set deleted_at = now()" +
-            "where attachment_id=#{id} AND file_storage_id IN " +
-            "(SELECT id FROM file_storages WHERE user_id = #{userId})")
-    void deleteFileStorageEntries(@Param("id") Integer id,
-                                  @Param("userId") Integer userId);
-
-    @Insert("INSERT INTO file_storage_entries (file_storage_id, attachment_id) VALUES (#{idFileStorage}, #{attachmentId})")
-    void createFileStorageEntries(@Param("attachmentId") Integer attachmentId,
-                                  @Param("idFileStorage") Integer idFileStorage);
-
-    @Select("SELECT id FROM file_storages WHERE user_id=#{userId} LIMIT 1")
-    Integer getFileStorage(@Param("userId") Integer userId);
-
-    @Select("SELECT nextVal('file_storages_id_seq')")
-    Integer getFileStorageId();
-
-    @Insert("INSERT INTO file_storages (id, user_id, created_at, updated_at) VALUES (#{idFileStorage}, #{userId}, now(), now())")
-    void createFileStorage(@Param("idFileStorage") Integer idFileStorage,
-                           @Param("userId") Integer userId);
-
-
-
-
-    @Insert("INSERT INTO spectra_data(profile_id,spectra,name) VALUES (#{profileId},#{stringPoints}::json,#{name})")
-    void saveSpectraDataFromFiles(Spectra spectra);
-
-
-    Spectra getSpectraDataById(@Param("id") Long id);
 }
