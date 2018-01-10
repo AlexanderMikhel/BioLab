@@ -33,7 +33,7 @@ public class DirectoryService {
         Long id = directoryDAO.add(directory);
         String path = fileProcessorBean.getDirectoryPath(id,directory.getUserId(),directory.getName());
         File outputFile = new File(path);
-        outputFile.mkdir();
+        outputFile.mkdirs();
         return directoryDAO.get(id);
     }
 
