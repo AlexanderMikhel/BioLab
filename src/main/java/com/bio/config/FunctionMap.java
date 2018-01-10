@@ -2,7 +2,6 @@ package com.bio.config;
 
 import com.bio.algorithms.Algorithm;
 import com.bio.algorithms.VRA;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

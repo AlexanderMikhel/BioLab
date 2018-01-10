@@ -1,5 +1,5 @@
 ----------------------------------------------------------
-INSERT INTO users (first_name, middle_name, last_name) VALUES
+INSERT INTO users (first_name, second_name, third_name) VALUES
   ('Владислав', 'Андреевич', 'Чунихин'),
   ('Александр', 'Сергеевич', 'Пушкин'),
   ('Станислав', 'Владимирович', 'Бушков');

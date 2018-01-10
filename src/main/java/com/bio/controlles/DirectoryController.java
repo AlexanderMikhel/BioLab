@@ -20,8 +20,8 @@ public class DirectoryController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Directory> getList(@RequestHeader(value = "Profile") UserProfile user,
-                                   @RequestParam(value = "ids") List<Long> ids,
-                                   @RequestParam(value = "parent_id") Long parentId){
+                                   @RequestParam(value = "ids",required = false) List<Long> ids,
+                                   @RequestParam(value = "parent_id",required = false) Long parentId){
         return directoryService.getList(user.getUserId(),ids,parentId);
     }
 

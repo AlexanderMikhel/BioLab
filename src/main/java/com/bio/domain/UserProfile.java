@@ -10,9 +10,6 @@ public class UserProfile {
     private String type;
     private List<String> roles;
 
-
-
-
     public Long getUserId() {
         return userId;
     }

@@ -18,7 +18,7 @@ public interface DirectoryDAO {
 
     Directory get(@Param("id") Long id);
 
-    @Select("Insert into directories(name,parent_id,user_id,visibility_id) values(#{name},#{parentId},#{userId},1) returning id")
+    @Select("Insert into directories(name,parent_directory_id,user_id,visibility_id) values(#{name},#{parentId},#{userId},1) returning id")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     Long add(Directory directory);
 

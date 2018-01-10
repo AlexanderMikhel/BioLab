@@ -1,4 +1,4 @@
-CREATE FUNCTION get_directory_path_as_string(directory_id INTEGER)
+CREATE FUNCTION get_directory_path_as_string(directory_id BIGINT)
   RETURNS VARCHAR
 LANGUAGE plpgsql
 AS $$
