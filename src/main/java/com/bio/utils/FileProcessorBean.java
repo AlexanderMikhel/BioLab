@@ -21,7 +21,7 @@ public class FileProcessorBean {
 
 
     public String getDirectoryPath(Long directoryId,Long userId, String name){
-        return filenamePattern+userId+"/"+fileProcessorBeanDAO.getPath(directoryId)+name;
+        return filenamePattern+userId+"/"+fileProcessorBeanDAO.getPath(directoryId);
     }
 }
 
