@@ -5,16 +5,12 @@ import com.bio.domain.Spectra;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class VRA implements Algorithm<Spectra,Double> {
+public class VRA implements Algorithm {
 
 
     @Override
-    public Double run(Spectra spectra) {
-        return null;
-    }
-
-    @Override
-    public Double apply(Spectra spectra) {
+    public Object run(Object o) {
         return null;
     }
 }
+
