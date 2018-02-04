@@ -32,7 +32,7 @@ public class MapFunctionBeanPostProcessor implements BeanPostProcessor {
         Class<?> beanClass = bean.getClass();
         if (beanClass.equals(FunctionMap.class)) {
             try {
-                Field function = beanClass.getDeclaredField("function");
+                Field function = beanClass.getDeclaredField("functionMap");
                 function.setAccessible(true);
                 Set<String> strings = map.keySet();
                 for (String string : strings) {
