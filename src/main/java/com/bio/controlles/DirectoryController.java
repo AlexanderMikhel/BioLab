@@ -1,4 +1,4 @@
-package com.bio.controlles;
+/*package com.bio.controlles;
 
 import com.bio.domain.Directory;
 import com.bio.domain.UserProfile;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
+*//**
  * @author Mikhel Alexander on 03.01.2018 email mikhelas@altarix.ru .
- */
+ *//*
 
 @RestController
 @RequestMapping("/directories")
@@ -47,4 +47,4 @@ public class DirectoryController {
     public void delete(@PathVariable("id") Long id){
         directoryService.delete(id);
     }
-}
+}*/

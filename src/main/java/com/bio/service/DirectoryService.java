@@ -1,3 +1,4 @@
+/*
 package com.bio.service;
 
 import com.bio.dao.DirectoryDAO;
@@ -5,14 +6,17 @@ import com.bio.domain.Directory;
 import com.bio.utils.FileProcessorBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.List;
 
+*/
 /**
  * @author Mikhel Alexander on 05.01.2018 email mikhelas@altarix.ru .
- */
-@Component
+ *//*
+
+@Service
 public class DirectoryService {
 
     @Autowired
@@ -37,10 +41,12 @@ public class DirectoryService {
         return directoryDAO.get(id);
     }
 
-    /**
+    */
+/**
      * дорабатывать
      * @param id
-     */
+     *//*
+
     public void delete(Long id){
        directoryDAO.delete(id);
 
@@ -56,3 +62,4 @@ public class DirectoryService {
     }
 
 }
+*/

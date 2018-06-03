@@ -17,15 +17,21 @@ public class ProfileService {
         return profileDAO.getProfileById(id);
     }
 
-    public List<Profile> getList(){return profileDAO.getList();}
+    public List<Profile> getList() {
+        return profileDAO.getList();
+    }
 
-    public void add (Profile profile){ profileDAO.add(profile);}
+    public void add(Profile profile) {
+        profileDAO.add(profile);
+    }
 
-    public Profile update(Profile profile){
+    public Profile update(Profile profile) {
         profileDAO.update(profile);
         return getProfileById(profile.getId());
     }
 
-    public void delete(Long id){profileDAO.delete(id);}
+    public void delete(Long id) {
+        profileDAO.delete(id);
+    }
 
 }

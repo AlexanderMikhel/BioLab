@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bio.dao.AttachmentDAO">
+
+    <select id="getList" resultMap="attachmentMap">
+        SELECT
+        id,
+        file_file_name,
+        file_content_type,
+        file_file_size,
+        directory_id
+        FROM attachments a
+        WHERE a.deleted_at is null
+        <if test="ids != null">
+            and a.id in
+            <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        <if test="name!=null">
+            and a.file_file_name = #{name}
+        </if>
+        <if test="directoryId!=null">
+            and a.directory_id = #{directoryId}
+        </if>
+    </select>
+
+
+    <resultMap id="attachmentMap" type="Attachment">
+        <id property="id" column="id"/>
+        <result property="file_file_name" column="fileFileName"/>
+        <result property="file_content_type" column="fileContentType"/>
+        <result property="file_file_size" column="fileFileSize"/>
+    </resultMap>
+
+</mapper>

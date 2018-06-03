@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bio.dao.ProjectDAO">
+
+    <sql id="baseParam">
+        p.id,
+        p.name as project_name,
+        pr.id as profile_id,
+        pr.name as profile_name
+    </sql>
+
+    <sql id="baseJoin">
+        from projects p
+        LEFT JOIN project_profile pp ON p.id = pp.project_id
+        LEFT JOIN profiles pr ON pp.profile_id = pr.id
+    </sql>
+
+    <select id="getList" resultMap="projectMap">
+        SELECT
+        <include refid="baseParam"/>
+        <include refid="baseJoin"/>
+            WHERE pr.id = #{profileId}
+            AND p.deleted_at is null
+     </select>
+
+    <select id="getById" resultMap="projectMap">
+        SELECT
+        <include refid="baseParam"/>
+        <include refid="baseJoin"/>
+        WHERE p.id = #{id}
+        AND p.deleted_at is null
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO projects(name) VALUES (#{name})
+    </insert>
+
+    <update id="update">
+        UPDATE projects SET
+          name = #{name},
+          updated_at = now()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+         UPDATE projects SET
+           deleted_at = now()
+         WHERE id = #{id}
+    </delete>
+
+    <resultMap id="projectMap" type="Project">
+        <id property="id" column="id"/>
+        <result property="name" column="project_name"/>
+        <association property="profile" resultMap="profileMap"/>
+    </resultMap>
+
+    <resultMap id="profileMap" type="Profile">
+        <id property="id" column="profile_id"/>
+        <result property="name" column="profile_name"/>
+    </resultMap>
+
+</mapper>

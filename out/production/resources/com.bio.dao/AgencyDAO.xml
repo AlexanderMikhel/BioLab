@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bio.dao.AgencyDAO">
+
+    <sql id="baseParam">
+        a.id,
+        a.name as agency_name,
+        a.address as agency_address,
+        a.phone as agency_phone,
+        a.country as agency_country,
+        a.city as agency_city,
+        a.science_group_id as agency_science_group_id,
+        sg.name as science_group_name
+    </sql>
+
+    <sql id="baseJoin">
+        FROM agencies a
+        JOIN science_group sg ON a.science_group_id = sg.id
+        JOIN profiles p ON p.agency_id = a.id
+    </sql>
+
+    <select id="getList" resultMap="agencyMap">
+        SELECT
+        <include refid="baseParam"/>
+        <include refid="baseJoin"/>
+        WHERE p.id = #{profileId}
+        AND a.deleted_at is null
+        AND p.deleted_at is null
+    </select>
+
+    <select id="getAgencyById" resultMap="agencyMap">
+        SELECT
+        <include refid="baseParam"/>
+        FROM agencies a
+        JOIN science_group sg ON a.science_group_id = sg.id
+        WHERE a.id = #{id}
+        AND a.deleted_at is null
+    </select>
+
+    <delete id="delete">
+        UPDATE agencies
+        SET
+            deleted_at = now()
+        WHERE id = #{id}
+    </delete>
+
+    <update id="update">
+        UPDATE agencies
+        SET
+            name       = #{name},
+            address    = #{address},
+            phone      = #{phone},
+            country    = #{country},
+            city       = #{city},
+            updated_at = now()
+        WHERE id = #{id}
+    </update>
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO agencies (name, address, phone, country, city, science_group_id)
+        VALUES (#{name}, #{address}, #{phone}, #{country}, #{city}, #{scienceGroupId})
+    </insert>
+
+    <resultMap id="agencyMap" type="Agency">
+        <id property="id" column="id"/>
+        <result property="name" column="agency_name"/>
+        <result property="address" column="agency_address"/>
+        <result property="phone" column="agency_phone"/>
+        <result property="country" column="agency_country"/>
+        <result property="city" column="agency_city"/>
+        <result property="scienceGroupId" column="agency_science_group_id"/>
+        <association property="scienceGroup" resultMap="ScienceGroupMap"/>
+    </resultMap>
+
+    <resultMap id="ScienceGroupMap" type="ScienceGroup">
+        <result property="name" column="science_group_name"/>
+    </resultMap>
+
+
+
+</mapper>
