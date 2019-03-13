@@ -1,95 +1,86 @@
-create table IF NOT EXISTS spectra_data
-(
-  id serial not null
-    constraint spectra_pkey
-    primary key,
-  spectra VARCHAR,
-  name VARCHAR,
-  profile_id INTEGER,
-  created_at timestamp default now(),
-  updated_at timestamp,
-  deleted_at timestamp,
-  CONSTRAINT fk_spectra_data_to_profiles FOREIGN KEY (profile_id)
-  REFERENCES profiles (id) MATCH SIMPLE
+create table if not exists directories(
+  id BIGSERIAL primary key,
+  name character varying,
+  parent_directory_id BIGINT,
+  created_at timestamp without time zone DEFAULT now(),
+  updated_at timestamp without time zone,
+  deleted_at timestamp without time zone,
+  user_id INTEGER,
+  CONSTRAINT fk_directories_to_users FOREIGN KEY (user_id)
+  REFERENCES users (id) MATCH SIMPLE
   ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE if NOT EXISTS files(
+  id                 bigSERIAL  PRIMARY KEY,
+  file_file_name     VARCHAR(255),
+  file_content_type  VARCHAR(255),
+  file_file_size     INTEGER,
+  created_at         TIMESTAMP,
+  updated_at         TIMESTAMP,
+  deleted_at         TIMESTAMP,
+  directory_id       BIGINT,
+  CONSTRAINT fk_files_to_directories FOREIGN KEY (directory_id)
+  REFERENCES directories (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE if NOT EXISTS user_file_storage(
+  id                 BIGSERIAL   PRIMARY KEY,
+  parent_directory_id       BIGINT,
+  user_id INTEGER,
+  CONSTRAINT fk_directories_to_users FOREIGN KEY (user_id)
+  REFERENCES users (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+create TABLE IF NOT EXISTS functions(
+  id serial primary key,
+  name VARCHAR
 );
 
 create TABLE IF NOT EXISTS experiments
 (
-  id serial not null
-    constraint experiment_pkey
-    primary key,
+  id bigserial primary key,
   name VARCHAR,
   created_by_profile INTEGER,
+  project_id BIGINT,
+  created_at timestamp default now(),
+  updated_at timestamp,
+  deleted_at timestamp,
   CONSTRAINT fk_experiments_to_profiles FOREIGN KEY (created_by_profile)
   REFERENCES profiles (id) MATCH SIMPLE
   ON UPDATE NO ACTION ON DELETE NO ACTION,
-  project_id INTEGER,
   CONSTRAINT fk_experiments_to_projects FOREIGN KEY (project_id)
   REFERENCES projects (id) MATCH SIMPLE
-  ON UPDATE NO ACTION ON DELETE NO ACTION,
+  ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+
+create table IF NOT EXISTS algorithms
+(
+  id bigserial  primary key,
+  experiment_id bigint,
+  algorithm_item_id bigint,
+  order integer,
   created_at timestamp default now(),
-  updated_at timestamp,
-  deleted_at timestamp
-);
-
-create TABLE IF NOT EXISTS experiment_spectra(
-  id serial not null
-    constraint experiment_spectra_pkey
-    primary key,
-  spectra_id INTEGER,
-  CONSTRAINT fk_experiment_spectra_to_spectra FOREIGN KEY (spectra_id)
-  REFERENCES spectra_data (id) MATCH SIMPLE
-  ON UPDATE NO ACTION ON DELETE NO ACTION,
-  experiment_id INTEGER,
-  CONSTRAINT fk_experiment_spectra_to_experiments FOREIGN KEY (experiment_id)
+  deleted_at timestamp,
+  CONSTRAINT fk_algorithms_to_experiments FOREIGN KEY (experiment_id)
   REFERENCES experiments (id) MATCH SIMPLE
   ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
 
-create TABLE IF NOT EXISTS algorithms(
-  id serial not null
-    constraint algorithm_pkey
-    primary key,
-  name VARCHAR,
-  order_lines INTEGER,
-  created_by_profile INTEGER,
-  CONSTRAINT fk_algorithms_to_profiles FOREIGN KEY (created_by_profile)
-  REFERENCES profiles (id) MATCH SIMPLE
+create TABLE IF NOT EXISTS algorithm_items(
+  id bigserial primary key,
+  function_id integer,
+  result_ids bigint[],
+  order INTEGER,
+  CONSTRAINT fk_algorithm_items_to_functions FOREIGN KEY (function_id)
+  REFERENCES functions (id) MATCH SIMPLE
   ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
 
-create TABLE IF NOT EXISTS experiment_algorithm(
-  id serial not null
-    constraint experiment_algorithm_pkey
-    primary key,
-  experiment_id INTEGER,
-  algoritm_id INTEGER,
-  order_lines INTEGER,
-  CONSTRAINT fk_experiment_algorithm_to_experiments FOREIGN KEY (experiment_id)
-  REFERENCES experiments (id) MATCH SIMPLE
-  ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_experiment_algorithm_to_algorithms FOREIGN KEY (algoritm_id)
-  REFERENCES algorithms (id) MATCH SIMPLE
-  ON UPDATE NO ACTION ON DELETE NO ACTION
-);
 
-DROP INDEX IF EXISTS experiments_profiles_id;
-CREATE INDEX experiments_profiles_id
-  ON experiments
-  USING BTREE
-  (created_by_profile);
 
-DROP INDEX IF EXISTS experiments_projects_id;
-CREATE INDEX experiments_projects_id
-  ON experiments
-  USING BTREE
-  (project_id);
-
-DROP INDEX IF EXISTS algorithms_profiles_id;
-CREATE INDEX algorithms_profiles_id
-  ON algorithms
-  USING BTREE
-  (created_by_profile);
